@@ -26,4 +26,4 @@ const Index = () => (
     </Page>
   </Layout>
 );
-export default Index;
+export default Index
