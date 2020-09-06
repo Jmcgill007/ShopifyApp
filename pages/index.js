@@ -11,37 +11,41 @@ class Index extends React.Component {
   }
   state = { open: false };
   render() {
+    const emptyState = !store.get('ids');
     return (
       <Page>
-          <TitleBar
-            title="Sample App"
-            primaryAction= {
-              {
-                content: 'Select Products',
-                onAction: () => this.setState({open: true}),
-              }
+        <TitleBar
+          title="Sample App"
+          primaryAction= {
+            {
+              content: 'Select Products',
+              onAction: () => this.setState({open: true}),
             }
-          />
-          <ResourcePicker 
-            resourceType = "Product"
-            showVariants = {false} 
-            open = {this.state.open} 
-            onSelection = {(resource)=> this.handleSelection(resource)}
-            onCancel ={()=> this.setState({ open: false })}
-          />
-        <Layout>
-          <EmptyState
-            heading="Select products to start"
-            action={{
-              content: 'Select products',
-              onAction: () => this.setState({ open: true }),
-            }}
-            image={img}
-          >
-            <p>Select products to change their price temporarily.</p>
-          </EmptyState>
-        </Layout>
-        <ResourceListWithProducts />
+          }
+        />
+        <ResourcePicker 
+          resourceType = "Product"
+          showVariants = {false} 
+          open = {this.state.open} 
+          onSelection = {(resource)=> this.handleSelection(resource)}
+          onCancel ={()=> this.setState({ open: false })}
+        />
+        {emptyState ? 
+          (<Layout>
+            <EmptyState
+              heading="Select products to start"
+              action={{
+                content: 'Select products',
+                onAction: () => this.setState({ open: true }),
+              }}
+              image={img}
+            >
+              <p>Select products to change their price temporarily.</p>
+            </EmptyState>
+          </Layout>)
+          :
+          (<ResourceListWithProducts />)
+        }
       </Page> 
     );
   }
